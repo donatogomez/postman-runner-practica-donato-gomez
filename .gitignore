@@ -1,0 +1,28 @@
+# Node modules (por si se integra con herramientas externas)
+node_modules/
+
+# Archivos temporales o de sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de entorno locales
+.env
+*.env
+
+# Archivos de respaldo
+*.bak
+*.old
+*.log
+
+# Archivos generados por Postman (si se generan en ejecuciones o debugging)
+newman/
+
+# Archivos generados por editores
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Archivos del sistema
+*.swp
+*~

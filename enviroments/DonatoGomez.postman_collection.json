@@ -1,0 +1,460 @@
+{
+	"info": {
+		"_postman_id": "8432d499-ece8-4958-bd55-86aa8acaae02",
+		"name": "Donato Gomez",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19912024"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"",
+							"let response = pm.response.json();",
+							"pm.environment.set(\"accessToken\", response.accessToken);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"usuario\",\r\n    \"password\": \"contraseña\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{endPoint}}/login",
+					"host": [
+						"{{endPoint}}"
+					],
+					"path": [
+						"login"
+					]
+				},
+				"description": "### Petición: Auth\n\n- **Descripción**: Autentica y obtiene el token de manera convencional en una petición.\n    \n- **Peticiones Relacionadas**:\n    \n    - Get by recordId\n        \n    - Create record\n        \n    - Update record\n        \n    - Delete record"
+			},
+			"response": [
+				{
+					"name": "Auth",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"usuario\",\r\n    \"password\": \"contraseña\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8083/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 29 May 2024 14:40:18 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTY5OTM2MTgsImV4cCI6MTcxNjk5NDExOH0.x7PRJL7cxBJz-xfmc2X0fc62dp2G9xmAJ7seDDVjrcs\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get all records",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"",
+							"let json = pm.response.json();",
+							"if (json.length > 0) {",
+							"  pm.collectionVariables.set(\"id_collectionVariable\", json[0].id);",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accessToken",
+						"value": "{{accessToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{endPoint}}/find",
+					"host": [
+						"{{endPoint}}"
+					],
+					"path": [
+						"find"
+					]
+				},
+				"description": "### Petición: Get all records\n\n- **Descripción**: Obtiene todos los registros.\n    \n- **Peticiones Relacionadas**:\n    \n    - Get all record Pre-Auth\n        \n    - Auth\n        \n    - Create record\n        \n    - Update record\n        \n    - Delete record"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Record + id_collectionVariable",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () { \r",
+							"pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "accessToken",
+						"value": "{{accessToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"field1\": \"updated_field1\",\r\n  \"field2\": \"updated_field2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{endPoint}}/update/{{id_collectionVariable}}",
+					"host": [
+						"{{endPoint}}"
+					],
+					"path": [
+						"update",
+						"{{id_collectionVariable}}"
+					]
+				},
+				"description": "### Petición: Update record\n\n- **Descripción**: Actualiza un registro existente.\n    \n- **Peticiones Relacionadas**:\n    \n    - Get all record Pre-Auth\n        \n    - Auth\n        \n    - Get by recordId\n        \n    - Create record\n        \n    - Delete record"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Record",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"",
+							"let json = pm.response.json();",
+							"pm.globals.set(\"id_globalVariable\", json.id);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accessToken",
+						"value": "{{accessToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"field1\": \"initial_value\",\r\n  \"field2\": \"initial_value\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{endPoint}}/create",
+					"host": [
+						"{{endPoint}}"
+					],
+					"path": [
+						"create"
+					]
+				},
+				"description": "### Petición: Create record\n\n- **Descripción**: Crea un nuevo registro.\n    \n- **Peticiones Relacionadas**:\n    \n    - Get all record Pre-Auth\n        \n    - Auth\n        \n    - Get by recordId\n        \n    - Update record\n        \n    - Delete record"
+			},
+			"response": []
+		},
+		{
+			"name": "Update field1 with random string",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"field1_variable\", JSON.stringify({ field1: pm.variables.get(\"randomField1\") }));"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.variables.set(\"randomField1\", pm.variables.replaceIn(\"{{$randomString}}\"));"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "accessToken",
+						"value": "{{accessToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"field1\": \"{{randomField1}}\",\r\n  \"field2\": \"no_change\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{endPoint}}/update/{{id_globalVariable}}",
+					"host": [
+						"{{endPoint}}"
+					],
+					"path": [
+						"update",
+						"{{id_globalVariable}}"
+					]
+				},
+				"description": "### Petición: Update record\n\n- **Descripción**: Actualiza un registro existente.\n    \n- **Peticiones Relacionadas**:\n    \n    - Get all record Pre-Auth\n        \n    - Auth\n        \n    - Get by recordId\n        \n    - Create record\n        \n    - Delete record"
+			},
+			"response": []
+		},
+		{
+			"name": "Verify updated field1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let json = pm.response.json();",
+							"let expected = JSON.parse(pm.collectionVariables.get(\"field1_variable\")).field1;",
+							"",
+							"pm.test(\"Field1 matches expected random value\", function () {",
+							"  pm.expect(json.field1).to.eql(expected);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"packages": {},
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accessToken",
+						"value": "{{accessToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{endPoint}}/find/{{id_globalVariable}}",
+					"host": [
+						"{{endPoint}}"
+					],
+					"path": [
+						"find",
+						"{{id_globalVariable}}"
+					]
+				},
+				"description": "### Petición: Get by productId\n\n- **Descripción**: Obtiene un registro específico añadiendo /id a la petición de obtener todos los registros.\n    \n- **Peticiones Relacionadas**:\n    \n    - Get all record Pre-Auth\n        \n    - Auth\n        \n    - Create record\n        \n    - Update record\n        \n    - Delete record"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Record",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"ResponseMessage exists\", function () {",
+							"  pm.expect(pm.response.text()).to.include(\"Record deleted successfully\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const getRequest = {",
+							"  url: pm.environment.get(\"endPoint\") + \"/find\",",
+							"  method: 'GET',",
+							"  header: {",
+							"    key: 'accessToken',",
+							"    value: pm.environment.get(\"accessToken\")",
+							"  }",
+							"};",
+							"",
+							"pm.sendRequest(getRequest, function (err, res) {",
+							"  if (!err) {",
+							"    const json = res.json();",
+							"    const firstId = json[0]?.id;",
+							"    if (firstId) {",
+							"      pm.globals.set(\"id_globalVariable\", firstId);",
+							"      console.log(\"ID para borrar:\", firstId);",
+							"    } else {",
+							"      console.warn(\"No hay registros para borrar\");",
+							"    }",
+							"  }",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "accessToken",
+						"value": "{{accessToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{endPoint}}/delete/{{id_globalVariable}}",
+					"host": [
+						"{{endPoint}}"
+					],
+					"path": [
+						"delete",
+						"{{id_globalVariable}}"
+					]
+				},
+				"description": "### Petición: Update record\n\n- **Descripción**: Actualiza un registro existente.\n    \n- **Peticiones Relacionadas**:\n    \n    - Get all record Pre-Auth\n        \n    - Auth\n        \n    - Get by recordId\n        \n    - Create record\n        \n    - Delete record"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id_collectionVariable",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "field1_variable",
+			"value": ""
+		}
+	]
+}

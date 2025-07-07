@@ -1,0 +1,27 @@
+{
+	"id": "1e0620fb-d147-4303-aa89-68611fe0916f",
+	"name": "WebServiceTest",
+	"values": [
+		{
+			"key": "accessToken",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "endPoint",
+			"value": "http://localhost:8083",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "loginRequestStatus",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2025-07-07T23:20:27.282Z",
+	"_postman_exported_using": "Postman/11.36.0"
+}
